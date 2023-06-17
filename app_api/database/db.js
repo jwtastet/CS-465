@@ -68,3 +68,4 @@ connect();
 
 //bring in teh Mongoose schema
 require('./models/travlr');
+require('./models/user');
