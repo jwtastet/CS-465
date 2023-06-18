@@ -3,8 +3,9 @@ import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/authresponse';
 import { TripDataService } from '../services/trip-data.service';
+
 @Injectable({
-providedIn: 'root'
+    providedIn: 'root'
 })
 
 export class AuthenticationService {
@@ -15,38 +16,46 @@ export class AuthenticationService {
     ) {}
 
     public getToken(): string {
+        console.log("getting token");
         return this.storage.getItem('travlr-token');
-       }
-       public saveToken(token: string): void {
+    }
+
+    public saveToken(token: string): void {
+        console.log("saving token");
         this.storage.setItem('travlr-token', token);
-       }
-       public login(user: User): Promise<any> {
+    }
+
+    public login(user: User): Promise<any> {
+        console.log("in AuthenticationService.login")
         return this.tripDataService.login(user)
-        .then((authResp: AuthResponse) =>
-       this.saveToken(authResp.token));
-       }
-       public register(user: User): Promise<any> {
+        .then((authResp: AuthResponse) => this.saveToken(authResp.token));
+    }
+
+    public register(user: User): Promise<any> {
         return this.tripDataService.register(user)
-        .then((authResp: AuthResponse) =>
-       this.saveToken(authResp.token));
-       }
-       public logout(): void {
+            .then((authResp: AuthResponse) => this.saveToken(authResp.token));
+    }
+
+    public logout(): void {
         this.storage.removeItem('travlr-token');
-       }
-       public isLoggedIn(): boolean {
+    }
+
+    public isLoggedIn(): boolean {
+        console.log("in isLoggedIn()");
         const token: string = this.getToken();
         if (token) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        return payload.exp > (Date.now() / 1000);
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload.exp > (Date.now() / 1000);
         } else {
-        return false;
+            return false;
         }
-       }
-       public getCurrentUser(): User {
+    }
+
+    public getCurrentUser(): User {
+        console.log("in AuthService getCurrentUser()");
         if (this.isLoggedIn()) {
         const token: string = this.getToken();
-        const { email, name } =
-       JSON.parse(atob(token.split('.')[1]));
+        const { email, name } = JSON.parse(atob(token.split('.')[1]));
         return { email, name } as User;
         }
        }

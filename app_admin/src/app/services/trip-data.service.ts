@@ -7,16 +7,20 @@ import { Trip } from '../models/trip';
 import { User } from '../models/user';
 
 @Injectable()
+
 export class TripDataService {
 
-  constructor(private http: Http, 
-    @Inject(BROWSER_STORAGE) private storage: Storage) { }
+  constructor(
+    private http: Http, 
+    @Inject(BROWSER_STORAGE) private storage: Storage
+    ) { }
 
   private apiBaseUrl = 'http://localhost:3000/api';
-  private tripUrl = `${this.apiBaseUrl}/trips/`;
+  private tripUrl = `${this.apiBaseUrl}/trips`;
 
   public addTrip(formData: Trip): Promise<Trip> {
     console.log('Inside TripDataService#addTrip');
+    console.log(this.storage.getItem('travlr-token'));
     return this.http
       .post(this.tripUrl, formData)
       .toPromise()
@@ -54,7 +58,7 @@ export class TripDataService {
     return Promise.reject(error.message || error);
   }
 
-  public login(user: User): Promise<AuthResponse> {
+  public login(user: User): Promise<any> {
     return this.makeAuthApiCall('login', user);
    }
 
@@ -68,6 +72,8 @@ export class TripDataService {
 
    private makeAuthApiCall(urlPath: string, user: User): Promise<AuthResponse> {
     const url: string = `${this.apiBaseUrl}/${urlPath}`;
+    console.log(url);
+    console.log("in trip-data service makeAuthApiCall");
     return this.http
       .post(url, user)
       .toPromise()

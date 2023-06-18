@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-var jwt = require('express-jwt');
+const jwt  = require('express-jwt');
 const auth = jwt({
-    secret: process.env.JWT_SECRET,
+    secret: process. env.JWT_SECRET,
     userProperty: "payload",
     algorithms: ["HS256"],
   });
