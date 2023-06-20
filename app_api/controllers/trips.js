@@ -44,6 +44,7 @@ const tripsFindCode = async (req, res) => {
 
 const tripsAddTrip = async (req, res) => {
 
+    console.log("inside app_api trips.tripsAddTrip");
     getUser(req, res,
         (req, res) => {
        

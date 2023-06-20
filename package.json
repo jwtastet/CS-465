@@ -24,7 +24,7 @@
     "seedgoose": "^2.0.15"
   },
   "devDependencies": {
-    "@types/express-jwt": "^7.4.2",
+
     "hbs": "^4.2.0",
     "seedgoose": "^2.0.2"
   }
